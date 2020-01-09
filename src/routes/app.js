@@ -1,8 +1,8 @@
 import React from 'react'
 import{ compose, lifecycle }from 'recompose'
-import withRedux  from './redux/withRedux'
+import withRedux  from '../redux/withRedux'
 
-import Menu from './componets/Menu/Menu'
+import Menu from '../componets/Menu/Menu'
 
 import  {
     BrowserRouter as Router, 
@@ -13,19 +13,27 @@ import  {
 
 import routes from './routes'
 
-import { getclients } from './redux/actions/clientReducer';
-import { getPets } from './redux/actions/petReducer'
-import { getServices } from './redux/actions/ServiceReducer'
+import { getclients } from '../redux/actions/clientReducer';
+import { getPets } from '../redux/actions/petReducer'
+import { getServices } from '../redux/actions/ServiceReducer'
+
+import RouteAuth from './components/RouteAuth'
 
 const app = ({
-
+    state 
 }) => {
     return (
         <Router >
             <Menu />
             <Switch>
                 {/* <Router path="/:page" /> */}
-                { routes.map( (route , key) => ( <Route path={route.path} component={ route.component } exact={route.exact} key={key}  /> )) } 
+                {   
+                    routes.map( (route , key) => ( 
+                        route.auth ? 
+                            <RouteAuth path={route.path} exact={route.exact} key={key} > { <route.component/> } </RouteAuth>
+                            : <Route path={route.path} exact={route.exact} key={key} > { <route.component/> } </Route> 
+                    )) 
+                } 
             </Switch>
         </Router>
     )

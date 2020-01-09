@@ -18,7 +18,7 @@ import { store } from './redux/store'
 // redux
 import { Provider } from 'react-redux'
 
-import App from './app'
+import App from './routes/app'
 
 ReactDOM.render(
     <Provider store={store}>
