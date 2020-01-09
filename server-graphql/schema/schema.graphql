@@ -1,0 +1,69 @@
+type Client { 
+    id: ID!
+    name: String! 
+    cpf: String! 
+    pets: [Pet!]
+}
+
+type Pet {
+    id: ID!
+    name: String!
+    type: String
+    obs: String
+    clientId: Int!
+    client: Client
+}
+
+type Service {
+    id: ID!
+    name: String!
+    price: Float!
+    description: String
+}
+
+type Call {
+    id: ID!
+    clientId: Int!
+    petId: Int!
+    serviceId: Int! 
+    status: String
+    obs: String
+    client: Client
+    pet: Pet
+    service: Service
+}
+
+type Mutation { 
+    addClient(name: String!, cpf: String!) : Client 
+    updateClient(name: String!, cpf: String!, id: ID!) : Client
+    deleteClient(id: ID!): ID!
+
+    addPet(name: String!, clientId: Int!, type: String, obs: String): Pet
+    updatePet(name: String!, clientId: Int!, type: String, obs: String, id: ID!): Pet
+    deletePet(id: ID!): ID!
+
+    addService(name: String!, price: Float!, description: String): Service
+    updateService(name: String!, price: Float!, description: String, id: ID!): Service
+    deleteService(id: ID!): ID!
+
+    addCall(clientId: Int!, petId: Int!, serviceId: Int!, status: String, obs: String): Call
+    updateCall(clientId: Int!, petId: Int!, serviceId: Int!, status: String, obs: String, id: ID!): Call
+    deleteCall(id: ID!): ID!
+    
+}
+
+type Query { 
+    status: String!
+
+    getClient(id: ID!): Client
+    clients: [Client!]!
+
+    getPet(id: ID!): Pet
+    pets: [Pet!]!
+
+    getService(id: ID!): Service
+    services: [Service!]!
+
+    getCall(id: ID!): Call
+    calls: [Call!]!
+}

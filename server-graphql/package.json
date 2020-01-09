@@ -1,0 +1,16 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "Teste GraphQl",
+  "main": "index.js",
+  "author": "crisciano <criscianosb2@live.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.18.3",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.1"
+  }
+}
