@@ -12,13 +12,11 @@ const initialState = Immutable({
 const SET_CLIENTS = "SET_CLIENTS"
 const GET_CLIENTS = "GET_CLIENTS"
 const UPDATE_CLIENTS = "UPDATE_CLIENTS"
-const SET_MODAL = "SET_MODAL"
 
 const UNLOAD_GET_CLIENTS = 'UNLOAD_GET_CLIENTS';
 
 export const getclients = createAction(GET_CLIENTS);
 export const updateClients = createAction(UPDATE_CLIENTS);
-export const setModal = createAction(SET_MODAL);
 
 export function* fetchingClients() {
     const { data } = yield select(state => state.clients );
@@ -67,22 +65,6 @@ export function* fetchingUpdateClients() {
     }
 }
 
-// function* saveclientsSession ({type, payload}) {
-//     // let key = null;
-
-//     console.log(type, payload);
-
-//     yield put({
-//         type: SET_CLIENTS,
-//         payload
-//     });
-
-//     // if(type === "SET_CLIENTS")
-//     //     yield store.dispatch("SET_CLIENT", payload)
-//     // // if(type === "SET_CLIENTS")
-//     //     yield store.set("SET_CLIENT", payload)
-// }
-
 export function* ClientsSagas() {
     console.log('========== client sagas =================');
 
@@ -98,6 +80,4 @@ export default handleActions({
     [UPDATE_CLIENTS] : (state, action) => state.merge({ fetchingClients: false, data: action.payload }),
 
     [UNLOAD_GET_CLIENTS]: (state, {payload}) => state.merge({ [payload.clients]: payload.value }),
-
-    [SET_MODAL] : (state, action) => state.merge({isModalOpen: action.payload})
 }, initialState)

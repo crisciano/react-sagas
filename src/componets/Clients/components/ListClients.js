@@ -46,7 +46,7 @@ const ListClients = ({
         console.log(contentForm);
         setContentForm(contentForm);
         toggle()
-        // setModal(true)
+        setModal(true)
         // console.log('=========== fetch ==========');
         // withRedux(null, { updateClients })
         

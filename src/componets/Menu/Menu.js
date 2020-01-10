@@ -13,16 +13,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuUi from '@material-ui/core/Menu';
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import routes from '../../routes/routes'
 
 const styles = {
     root: {
         flexGrow: 1,
     },
-    // menuButton: {
-    //     marginRight: theme.spacing(2),
-    // },
     title: {
         flexGrow: 1,
     }
@@ -37,6 +34,7 @@ const Menu = ({
     const open = Boolean(anchorEl);
     const handleClose = () => { setAnchorEl(null)};
     const handleMenu = event => { setAnchorEl(event.currentTarget) }
+    const history = useHistory();
 
     return (
         <div >
@@ -67,11 +65,13 @@ const Menu = ({
                                 onClose={handleClose}
                             >
                                 { routes.map((route, key) => 
+                                    route.visible ?
                                         <MenuItem  key={key}>
                                             <Link to={route.path}> 
                                                 {route.displayName}
                                             </Link> 
                                         </MenuItem> 
+                                    : null
                                     )
                                 }
                             </MenuUi>
@@ -80,7 +80,7 @@ const Menu = ({
                         <Typography variant="h6" className={classes.title}>
                             News
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        <Button color="inherit" onClick={() => history.push('login') }>Login</Button>
                     </Toolbar>
                 </AppBar>
             </div>

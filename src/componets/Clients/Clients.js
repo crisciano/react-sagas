@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { array } from 'prop-types'
+import { array, func } from 'prop-types'
 import whithRedux from '../../redux/withRedux'
 import ListClients from './components/ListClients'
 // import ListPets from '../Pets/components/ListPets'
@@ -12,9 +12,15 @@ import { IconButton, Container } from '@material-ui/core'
 
 import useModal from '../../hooks/useModal'
 
+import { setModal } from '../../redux/actions/clientModalReducer'
+import withRedux from '../../redux/withRedux'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 const Clients = ({
-    clients,
-    pets
+    setModal,
+    isModalOpen
 }) =>  {
 // const Clients = props => {
 
@@ -25,19 +31,19 @@ const Clients = ({
         <Container >
             <h1>
                 Clients 
+                {/* <IconButton onClick={() =>{ 
+                    setModal(true)
+                    console.log(isModalOpen);
+                }} >  */}
                 <IconButton onClick={toggle} > 
                     <AddCircleIcon /> 
                 </IconButton>
 
+                {/* <FormModal title="Cadastrar Cliente" /> */}
                 <FormModal open={isToggle} handleClose={toggle} title="Cadastrar Cliente" />
             </h1>
             {/* { !clients.fetchingClients ? <ListClients clients={clients.data}  /> : null } */}
             <ListClients />
-            
-            {/* <hr></hr>
-
-            <h1>Pets</h1>
-            { !pets.fetchingPets ? <ListPets pets={pets.data} /> : null } */}
 
         </Container>
     )
@@ -46,13 +52,26 @@ const Clients = ({
 
 Clients.prototype = {
     clients : array,
-    pets : array
+    pets : array,
+    setModal: func
 }
 
+const mapStateToProps = (state) => ({
+    isModalOpen: state.modalClient.isModalOpen
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setModal: bindActionCreators(setModal, dispatch),
+})
+
 export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    // withRedux(null, {setModal}),
     whithRedux( state => ({
         clients : state.clients,
-        pets : state.pets
-    }))
+        pets : state.pets,
+        isModalOpen: state.modalClient.isModalOpen
+    })),
+    withRedux(state => console.log(state)) 
 
 )(Clients)

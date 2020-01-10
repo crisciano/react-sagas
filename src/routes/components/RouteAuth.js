@@ -2,12 +2,11 @@ import React from 'react'
 import{ compose }from 'recompose'
 
 import  { Route, Redirect } from 'react-router-dom'
-
-const  auth = {
-    isAuthenticated: false
-}
+import withRedux from '../../redux/withRedux'
+import {obj} from 'prop-types'
 
 const RouteAuth = ({
+    user,
     children,
     ...rest
 }) => {
@@ -16,7 +15,7 @@ const RouteAuth = ({
             {...rest}
             render={
                 ({location}) =>  
-                    auth.isAuthenticated ? (
+                    user.isAuthenticated ? (
                         children
                     ) : (
                         <Redirect
@@ -32,7 +31,9 @@ const RouteAuth = ({
 }
 
 RouteAuth.prototype = {
-
+    user: obj
 }
 
-export default compose()(RouteAuth)
+export default compose(
+    withRedux( state => ({ user: state.user}) )
+)(RouteAuth)
