@@ -5,7 +5,7 @@ import ClientsService from '../../../api/services/ClientsService';
 import { func, obj } from 'prop-types'
 import { compose } from 'recompose';
 import withRedux from '../../../redux/withRedux';
-import updateClient from '../../../redux/actions/clientReducer'
+import getclients from '../../../redux/actions/clientReducer'
 
 // import { validateForm } from '../../../helpers/validation'
 
@@ -31,7 +31,7 @@ const validationForm = {
 const FormClients = ({
     closeModal,
     contentForm,
-    updateClient
+    getclients
 }) => {
 
     const { validateForm } = useValidate();
@@ -62,7 +62,7 @@ const FormClients = ({
             closeModal()
         }
             
-        // updateClient()
+        // getclients()
 
     }
     
@@ -97,7 +97,8 @@ const FormClients = ({
 
 FormClients.prototype = {
     closeModal : func,
-    contentForm : obj  
+    contentForm : obj,
+    getclients: func
 }
 
 // const mapStateToProps = state => ({
@@ -110,5 +111,5 @@ FormClients.prototype = {
 
 export default compose(
     // connect(mapStateToProps, mapDispatchToProps),
-    withRedux(null, { updateClient })
+    withRedux(null, { getclients })
 )(FormClients)

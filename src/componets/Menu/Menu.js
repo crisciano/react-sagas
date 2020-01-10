@@ -18,6 +18,8 @@ import routes from '../../routes/routes'
 
 import withRedux from '../../redux/withRedux'
 
+import { setUser, setLogin } from '../../redux/actions/userReducer'
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -30,7 +32,9 @@ const styles = {
 
 const Menu = ({
     classes,
-    isAuthenticated
+    isAuthenticated,
+    setUser,
+    setLogin
 }) => {
 
     const [anchorEl , setAnchorEl] = React.useState(null)
@@ -38,6 +42,7 @@ const Menu = ({
     const handleClose = () => { setAnchorEl(null)};
     const handleMenu = event => { setAnchorEl(event.currentTarget) }
     const history = useHistory();
+    const logout = () => { setLogin(false); setUser({}); history.replace({pathname: '/'}) }
 
     return (
         <div >
@@ -86,7 +91,7 @@ const Menu = ({
                         {
                             !isAuthenticated ?
                                 <Button color="inherit" onClick={() => history.push('login') }>Login</Button>
-                                :null
+                                : <Button color="inherit" onClick={logout}>Logout</Button>
                         }
                     </Toolbar>
                 </AppBar>
@@ -101,6 +106,7 @@ Menu.prototype = {
 }
 
 export default compose(
+    withRedux(null, { setUser, setLogin }),
     withStyles(styles),
     withRedux(state=> ({ isAuthenticated: state.user.isAuthenticated}) )
 )(Menu)

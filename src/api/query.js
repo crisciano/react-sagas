@@ -1,6 +1,6 @@
 
 export const GET_CLIENTS = "{ clients { id name cpf pets { id name type obs clientId }}}";
-export const GET_PETS = "{ pets { id name type obs clientId }}";
+export const GET_PETS = "{ pets { id name type obs client{ id name cpf }}}";
 export const GET_SERVICES = "{ services{ id name price }}";
 
 export const ADD_CLIENT = 'mutation ($name: String!, $cpf: String!) { addClient(name: $name, cpf: $cpf){ id name cpf }}';

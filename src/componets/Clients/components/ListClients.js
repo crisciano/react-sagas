@@ -19,7 +19,7 @@ import useModal from '../../../hooks/useModal'
 import FormModal from './FormModal';
 // import {withRedux }from '../../../redux/withRedux';
 
-import { array, func  } from 'prop-types';
+import { array, func, bool  } from 'prop-types';
 import withRedux from '../../../redux/withRedux'
 
 // import updateClients from '../../../redux/actions/clientReducer'
@@ -27,12 +27,10 @@ import withRedux from '../../../redux/withRedux'
 // import { bindActionCreators } from 'redux'
 import { setModal }from '../../../redux/actions/clientModalReducer'
 
-
 const ListClients = ({
     clients,
-    updateClients,
     setModal,
-    dispatch
+    isAuth
 }) => {
     const { isToggle, toggle } = useModal()
 
@@ -77,7 +75,7 @@ const ListClients = ({
                                                 row.pets.length ? <ListPets pets= { row.pets } /> : null
                                             }
                                         </TableCell>
-                                        <TableCell align="center">
+                                        <TableCell align="center" >
                                             <IconButton onClick={() => deleteItem(row.id)} > 
                                                 <DeleteIcon />
                                             </IconButton>
@@ -102,7 +100,8 @@ const ListClients = ({
 
 ListClients.prototype = {
     clients : array,
-    setModal: func
+    setModal: func,
+    isAth: bool
 }
 
 // const mapStateToProps = state => ({
@@ -116,9 +115,11 @@ ListClients.prototype = {
 export default compose(
 
     // connect(mapStateToProps, mapDispatchToProps),
+    // withRedux(null, {isAuthenticated}),
     withRedux(null, { setModal }),
     withRedux( state => ({
         clients : state.clients,
+        isAuth : state.user.isAuthenticated
     })),
 
 ) (ListClients)

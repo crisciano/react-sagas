@@ -56,7 +56,7 @@ export function* fetchingUpdateClients() {
         console.log("Clients ===> ", response);
 
         yield put({
-            type: SET_CLIENTS,
+            type: UPDATE_CLIENTS,
             payload: response
         });
 

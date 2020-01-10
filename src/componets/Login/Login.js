@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField'
 import ClientService  from '../../api/services/ClientsService'
 
 import { setLogin, setUser } from '../../redux/actions/userReducer'
-import { setModal } from '../../redux/actions/clientModalReducer'
 
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -25,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = ({
-    setModal,
     setLogin,
     setUser
 }) => {
@@ -45,18 +43,8 @@ const Login = ({
 
         if( result ) {
 
-            // setLogin(true)
-            setModal(true)
-            // console.log('===============');
-            // console.log('===============');
-            // console.log(isModalOpen);
-            // console.log('===============');
-            // console.log('===============');
             setLogin(true)
             setUser(result)
-
-            console.log(from);
-            console.log(form, result);
             history.replace(from)
         }
 
@@ -113,7 +101,6 @@ Login.prototype = {
 }
 
 export default compose(
-    withRedux(null, {setModal}),
     withRedux(null, {setLogin}),
     withRedux(null, {setUser}),
     withRedux( state => ({
