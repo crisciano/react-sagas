@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import{ compose }from 'recompose'
 
-import { obj } from 'prop-types'
+import { obj, bool } from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +16,8 @@ import MenuUi from '@material-ui/core/Menu';
 import { Link, useHistory } from 'react-router-dom'
 import routes from '../../routes/routes'
 
+import withRedux from '../../redux/withRedux'
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -27,7 +29,8 @@ const styles = {
 
 
 const Menu = ({
-    classes
+    classes,
+    isAuthenticated
 }) => {
 
     const [anchorEl , setAnchorEl] = React.useState(null)
@@ -80,7 +83,11 @@ const Menu = ({
                         <Typography variant="h6" className={classes.title}>
                             News
                         </Typography>
-                        <Button color="inherit" onClick={() => history.push('login') }>Login</Button>
+                        {
+                            !isAuthenticated ?
+                                <Button color="inherit" onClick={() => history.push('login') }>Login</Button>
+                                :null
+                        }
                     </Toolbar>
                 </AppBar>
             </div>
@@ -88,10 +95,12 @@ const Menu = ({
     )
 }
 
-    Menu.prototype = {
-    classes: obj
+Menu.prototype = {
+    classes: obj,
+    isAuthenticated: bool
 }
 
 export default compose(
-    withStyles(styles)
+    withStyles(styles),
+    withRedux(state=> ({ isAuthenticated: state.user.isAuthenticated}) )
 )(Menu)

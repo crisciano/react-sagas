@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import{ compose }from 'recompose'
-import { Button } from '@material-ui/core'
+import { compose } from 'recompose'
 import Grid from '@material-ui/core/Grid';
 import withRedux from '../../redux/withRedux'
 import { obj, func  } from 'prop-types'
 
+import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 
@@ -25,9 +25,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = ({
-    state,
-    user,
-    isModalOpen
+    setModal,
+    setLogin,
+    setUser
 }) => {
     const classes = useStyles();
     const [ form, setForm ] = useState({})
@@ -57,7 +57,6 @@ const Login = ({
 
             console.log(from);
             console.log(form, result);
-            console.log(user);
             history.replace(from)
         }
 
@@ -109,15 +108,15 @@ const Login = ({
 
 Login.prototype = {
     state: obj,
-    user: obj,
-    setLogin: func
+    setLogin: func,
+    setModal: func
 }
 
 export default compose(
     withRedux(null, {setModal}),
     withRedux(null, {setLogin}),
+    withRedux(null, {setUser}),
     withRedux( state => ({
-        user: state.user, 
         isModalOpen: state.modalClient.isModalOpen
     })),
     withRedux(state => console.log(state))
